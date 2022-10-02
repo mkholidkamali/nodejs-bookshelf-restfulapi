@@ -14,6 +14,14 @@ const routes = [
         },
     },
     {
+        method: 'POST',
+        path: '/login',
+        handler: (request, h) => {
+            const { username, password } =  request.payload;
+            return `Welcome ${username}`
+        }
+    },
+    {
         method: 'GET',
         path: '/about',
         handler: (request, h) => {
@@ -32,7 +40,7 @@ const routes = [
         path: '/hello/{name?}',
         handler: (request, h) => {
             const { name = "stranger" } = request.params;
-            
+
             const { lang } = request.query;
 
             if (lang === 'id') {
