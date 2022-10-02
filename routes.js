@@ -3,7 +3,9 @@ const routes = [
         method: 'GET',
         path: '/',
         handler: (request, h) => {
-            return 'Homepage';
+            return h.response('success')
+                .type('text/plain')
+                .header('X-Custom', 'Some value');
         },
     },
     {
