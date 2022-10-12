@@ -13,7 +13,7 @@ class NotesHandler {
         this.deleteNoteByIdHandler = this.deleteNoteByIdHandler.bind(this);
     }
 
-    postNoteHandler(request, h) {
+    async postNoteHandler(request, h) {
         // Try Catch
         try {
             this._validator.validateNotePayload(request.payload)
@@ -21,7 +21,7 @@ class NotesHandler {
             const { title = 'untitled', body, tags } = request.payload;
     
             // Fire Add Service
-            const noteId = this._service.addNote({ title, body, tags});
+            const noteId = await this._service.addNote({ title, body, tags});
 
             const response = h.response({
                 status: 'success',
@@ -53,9 +53,9 @@ class NotesHandler {
         }
     }
 
-    getNotesHandler() {
+    async getNotesHandler() {
         // Fire Get Service
-        const notes = this._service.getNotes();
+        const notes = await this._service.getNotes();
 
         // Response
         return {
@@ -66,13 +66,13 @@ class NotesHandler {
         }
     }
 
-    getNoteByIdHandler(request, h) {
+    async getNoteByIdHandler(request, h) {
         // Try Catch
         try {
             const { id } = request.params;    
 
             // Fire Get Handler
-            const note = this._service.getNoteById(id);
+            const note = await this._service.getNoteById(id);
 
             // Return
             return {
@@ -102,7 +102,7 @@ class NotesHandler {
         }
     }
 
-    putNoteByIdHandler(request, h) {
+    async putNoteByIdHandler(request, h) {
         // Try Catch
         try {
             this._validator.validateNotePayload(request.payload);
@@ -110,7 +110,7 @@ class NotesHandler {
             const { id } = request.params;    
 
             // Fire Put Handler
-            this._service.editNoteById(id, request.payload);
+            await this._service.editNoteById(id, request.payload);
 
             // Return
             return {
@@ -138,13 +138,13 @@ class NotesHandler {
         }
     }
 
-    deleteNoteByIdHandler(request, h) {
+    async deleteNoteByIdHandler(request, h) {
         // Try Catch
         try {
             const { id } = request.params;    
 
             // Fire Put Handler
-            this._service.deleteNoteById(id);
+            await this._service.deleteNoteById(id);
 
             // Return
             return {
